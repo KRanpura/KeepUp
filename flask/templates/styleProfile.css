@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 *{
     margin: 0;
     padding: 0;
@@ -80,7 +80,7 @@ body{
 
 .main--content{
     position: relative;
-    background-color: #fff;
+    background-color: #d0f0c044;
     width: 100%;
     padding: 1rem;
 }
@@ -91,3 +91,34 @@ body{
      cursor: pointer;
      border-radius: 50%;
 }
+.header--wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px 2rem;
+    margin-bottom: 1rem;
+}
+
+.header--title {
+    color: #7dcc88;   
+}
+
+.user--info{
+    display: flex;
+    align-items: center;
+    gap: 1;
+}
+
+.search--box{
+    background: rgb(237, 237, 237);
+    border-radius: 15px;
+    color: rbg(113, 99, 186, 255);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+}
+ */
