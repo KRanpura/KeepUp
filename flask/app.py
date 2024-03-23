@@ -136,6 +136,14 @@ def signup():
 def profile():
     return render_template("profile.html")
 
+@app.route("/forme")
+def forme():
+    return render_template("forme.html")
+
+@app.route("/explore")
+def explore():
+    return render_template("explore.html")
+
 @app.route("/logout")
 def logout():
     return render_template("home.html")
