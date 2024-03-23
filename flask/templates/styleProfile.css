@@ -16,7 +16,7 @@ body{
     top: 0;
     left: 0;
     right: 0;
-    width: 240px;
+    width: 250px;
     height: 100vh;
     padding: 0 1.7rem;
     color: #fff;
@@ -58,7 +58,7 @@ body{
 }
 
 .menu a span{
-    overflow: hodden;
+    overflow: hidden;
 }
 
 .menu a i{
