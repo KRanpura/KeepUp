@@ -79,7 +79,7 @@ def login():
         if not user:
             return render_template("error.html")
 
-        if user["password"] == password:  
+        if user["pass"] == password:  
             # Store user information in the session
             session["user_id"] = user["id"]
             return redirect(url_for("profile"))
@@ -118,7 +118,7 @@ def signup():
 
         # Insert the new user into the database
         cursor.execute(
-            "INSERT INTO users (first_name, last_name, email, passw) VALUES (?, ?, ?, ?)",
+            "INSERT INTO users (firstname, lastname, email, pass) VALUES (?, ?, ?, ?)",
             (first_name, last_name, email, passw),
         )
         db.commit()
@@ -136,6 +136,9 @@ def signup():
 def profile():
     return render_template("profile.html")
 
+@app.route("/logout")
+def logout():
+    return render_template("home.html")
 # url = str("https://www.learndatasci.com/tutorials/ultimate-guide-web-scraping-w-python-requests-and-beautifulsoup/")
 # htmlPage = requests.get(url)
 # htmlGuts = BeautifulSoup(htmlPage.text)
