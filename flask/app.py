@@ -136,12 +136,12 @@ def signup():
 def profile():
     return render_template("profile.html")
 
-url = str("https://www.learndatasci.com/tutorials/ultimate-guide-web-scraping-w-python-requests-and-beautifulsoup/")
-htmlPage = requests.get(url)
-htmlGuts = BeautifulSoup(htmlPage.text)
+# url = str("https://www.learndatasci.com/tutorials/ultimate-guide-web-scraping-w-python-requests-and-beautifulsoup/")
+# htmlPage = requests.get(url)
+# htmlGuts = BeautifulSoup(htmlPage.text)
 
-for link in htmlGuts.find_all('a'):
-    print(link.get('href'))
+# for link in htmlGuts.find_all('a'):
+#     print(link.get('href'))
 
 # @app.route("/login")
 # def login():
