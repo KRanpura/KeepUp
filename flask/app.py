@@ -118,8 +118,8 @@ def signup():
 
         # Insert the new user into the database
         cursor.execute(
-            "INSERT INTO users (firstname, lastname, email, pass) VALUES (?, ?, ?, ?)",
-            (first_name, last_name, email, passw),
+            "INSERT INTO users (email, firstname, lastname, pass) VALUES (?, ?, ?, ?)",
+            (email, first_name, last_name, passw),
         )
         db.commit()
 
