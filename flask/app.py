@@ -4,6 +4,9 @@ import os
 import json
 import sqlite3
 from os import urandom
+from bs4 import BeautifulSoup
+import requests
+
 # from os import environ as env 
 # from urllib.parse import quote_plus, urlencode
 
@@ -132,6 +135,13 @@ def signup():
 @app.route("/profile")
 def profile():
     return render_template("profile.html")
+
+url = str("https://www.learndatasci.com/tutorials/ultimate-guide-web-scraping-w-python-requests-and-beautifulsoup/")
+htmlPage = requests.get(url)
+htmlGuts = BeautifulSoup(htmlPage.text)
+
+for link in htmlGuts.find_all('a'):
+    print(link.get('href'))
 
 # @app.route("/login")
 # def login():
