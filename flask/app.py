@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import render_template, redirect, request, session, url_for, send_file, make_response, g
+from flask import jsonify
 import os
 import json
 import sqlite3
@@ -105,9 +106,22 @@ def signup():
         user = cursor.fetchone()
         session["user_id"] = user["id"]
 
-        return redirect(url_for("profile"))
+        return render_template("submit_interests.html")
 
     return render_template("signup.html")
+
+@app.route("/submit_interests", methods=["POST"])
+def submit_interests():
+    if request.method == "POST":
+        selected_interests = request.form.getlist("interests")
+        user_id = session.get("user_id")
+        db = get_db()
+        cursor = db.cursor()
+        for interest in selected_interests:
+            cursor.execute("INSERT INTO interests (userid, interest) VALUES (?, ?)", (user_id, interest))
+        db.commit()
+        return redirect(url_for("profile"))
+
 
 @app.route("/profile")
 def profile():
@@ -116,6 +130,11 @@ def profile():
 @app.route("/forme")
 def forme():
     return render_template("forme.html")
+
+@app.route("/chooseinterests")
+def chooseinterests():
+    return render_template("chooseinterests.html")
+
 
 @app.route("/explore")
 def explore():
