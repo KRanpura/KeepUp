@@ -23,8 +23,8 @@
             text-transform: uppercase;
             font-size: 1.25em;
             letter-spacing: 200;
-            font-weight: 100;
-            padding: 10px 25px;
+            font-weight: 150;
+            padding: 5px 20px;
             transition: 0.5s;
             
         }
@@ -35,28 +35,73 @@
             box-shadow: 0 0 35px var(--clr);
         }
         .container {
-            /* max-width: 100%; */
-            /* overflow: hidden; */
-            margin: 350px auto;
-            padding: 50px;
-            border: 25px solid #7dcc88;
-            border-radius: 150px;
+            position: relative;
+            max-width: 475px;
+            max-height: 750px;
+            margin:0%;
+            align-content: center;
+            overflow: hidden;
+            margin: 300px auto;
+            padding: 35px;
+            border: 1px floralwhite #7dcc88;
+            border-radius: 45px;
             background-color: #e9e9e9c5;
-            box-shadow: 0 0 20px rgba(0, 0.25, 0.25, 0.25);
+            box-shadow: 0 15px 20px rgba(0, 0.25, 0.25, 0.25);
+            background-image: linear-gradient( #d1e6b6c0, #75707018); 
+        }
+        
+        .container2 {
+            max-width: 50%;
+            align-content: center;
+            overflow: hidden;
+            margin: 10px auto;
+            padding: 10px;
+            margin-bottom: 10px;
+            /* border: 5px solid #7dcc88;
+            border-radius: 40px;
+            background-color: #e9e9e9c5;
+            box-shadow: 0 10px 10px rgba(0, 0.1, 0.1, 0.1);
+            background-image: linear-gradient( #d0f0c0, rgba(0, 128, 0, 0.39)); */
+        }
+
+        .logo--image{
+            position: relative;
+            border-radius: 150px;
+            /* align-items: center;
+            align-content: center;
+            justify-content: center; */
+            align-content: center;
+            border: 3px solid #7dcc88;
+            width: 250px;
+            height: 100px;
+        }
+
+        .logo--image:hover{
+        display: block; /*display image as a block*/
+        /* margin: 1000 auto; center horizontally */
+        /* transform: translateY(-10px); */
+        transition: 0.5s;
+        transform: scale(1.25);
+        margin-right: 30px;
+        margin-left: 30px;
         }
         
         .container h2 {
-            font-family: "font-family:verdana";
+            font-family: 'Courier New', Courier, monospace;
             text-align: center;
-            margin-bottom: 25px;
+            justify-content: center;
+            margin-bottom: 10px;
         }
         .container h3 {
             text-align: center;
-            font-weight: 1000;
-            font-style: italic;
+            justify-items: center;
+            font-weight: 550;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-style: oblique;
+            font-size: 36px;
             color: #000;
-            font-family: "font-family:Poppin";
-            margin-bottom: 30px;
+            /* font-family: "font-family:Poppin"; */
+            margin-bottom: 10px;
         }
         .signup-link {
             text-align: center;
@@ -65,33 +110,28 @@
         .signup-link a {
             color: #007bff;
             text-decoration: none;
+            font-weight: 750;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 20px;
         }
-        .logo {
-            display: block; /*display image as a block*/
-            margin: 0 auto; /* center horizontally */
-            align-content: center;
-            justify-content: center;
-        }
-        
+
 
     </style>
 </head>
 <body>
-    
     <div class="container">
-        <img src="/static/resources/temp_logo.png" width="100" height="100" class= "logo" > 
-        <h2>KEEPUP!</h2>
+        <img class="logo--image" src = "/static/resources/logoKeepUp1.png" > 
         <h3>Discover our exclusive data visualizations, join our community, and more!</h3>
-            <div class="signup-link">
-                <a href = "/signup" style=" --clr: #d0f0c0"><span>Sign Up Now</span></a>            </div>
+            
+        <div class = "container2">
         <div class="signup-link">
             <a href="/login" style=" --clr: #d0f0c0">Login</a>
+            <div class="signup-link">
+                <a href = "/signup" style=" --clr: #d0f0c0"><span>Sign Up Now</span></a>            
+            </div>
         </div>
-        
-    </div>
-    <!-- <div class = "container">
-        
-    </div> -->
+        </div>
+</div>
 </body>
 
 </html>
