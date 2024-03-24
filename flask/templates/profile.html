@@ -1,99 +1,97 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset = "UTF-8" />
-        <title>DASHBOARD DESIGN</title>
-        <!-- <link rel = "stylesheet" href="styleProfile.css" /> -->
-        <link
-            rel="stylesheet"
-            href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        />
-        <style>
-            *{
-    margin: 0;
-    padding: 0;
-    border: none;
-    outline: none;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
 
-body{
-    display: flex;
-}
-.sidebar{
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 110px;
-    height: 100vh;
-    padding: 0 1.7rem;
-    color: #fff;
-    overflow: hidden;
-    transition: all .5s linear;
-    background: #7dcc88;
-}
+        body {
+            display: flex;
+        }
 
-.sidebar:hover{
-    width: 300px;
-    transition: .5s;
+        .sidebar {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 110px;
+            height: 100vh;
+            padding: 0 1.7rem;
+            color: #fff;
+            overflow: hidden;
+            transition: all .5s linear;
+            background: #7dcc88;
+        }
 
-}
-.logo{
-    height: 80px;
-    padding: 16px;
-}
-.menu{
-    height: 88%;
-    position: relative;
-    list-style: none;
-    padding: 0;
-}
+        .sidebar:hover {
+            width: 300px;
+            transition: .5s;
+        }
 
-.menu li{
-    padding: 1rem;
-    margin: 8px 0;
-    border-radius: 8px;
-    transition: all 0.5s ease-in-out;
-}
+        .logo {
+            height: 80px;
+            padding: 16px;
+        }
 
-.menu li:hover,
-.active {
-    background: #e0e0e058;
-}
+        .menu {
+            height: 88%;
+            position: relative;
+            list-style: none;
+            padding: 0;
+        }
 
-.menu a{
-    color: #fff;
-    font-size: 14px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
+        .menu li {
+            padding: 1rem;
+            margin: 8px 0;
+            border-radius: 8px;
+            transition: all 0.5s ease-in-out;
+        }
 
-.menu a span{
-    overflow: hidden;
-}
+        .menu li:hover,
+        .active {
+            background: #e0e0e058;
+        }
 
-.menu a i{
-    font-size: 1.2rem;
-}
+        .menu a {
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
 
-.logout {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    
-}
+        .menu a span {
+            overflow: hidden;
+        }
 
-.main--content{
-    position: relative;
-    background-color: #d0f0c044;
-    width: 100%;
-    padding: 1rem;
-}
+        .menu a i {
+            font-size: 1.2rem;
+        }
+
+        .logout {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
 
 .header--wrapper img{
      width: 50px;
@@ -289,6 +287,17 @@ td{
     color: #333;
 }
 
+td.url {
+    max-width: 200px; /* Adjust the width as needed */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+td.title {
+    word-wrap: break-word;
+    max-width: 300px; /* Adjust the width as needed */
+}
+
 td:nth-child(even){
     background: #fff;
     align-content: center;
@@ -394,12 +403,6 @@ th{
         <div class="sidebar"> 
             <div class= "logo"></div>
             <ul class = "menu">
-                <!-- <li class = "active">
-                    <a href=" " >
-                       <i class = "fas fab fas fa-head-side-cough"></i>
-                       <span>DASHBOARD</span>
-                    </a>
-                </li> -->
                 <li>
                     <a href="/profile">
                        <i class = "fas fa-user"></i>
@@ -413,9 +416,9 @@ th{
                     </a>
                 </li>
                 <li>
-                    <a href="/forme">
+                    <a href="/chat">
                        <i class = "fas fa-bookmark"></i>
-                       <span>FOR ME</span>
+                       <span>CHAT</span>
                     </a>
                 </li>
                 <li>
@@ -466,7 +469,7 @@ th{
                             <i class="fas fa-dollar-sign icon1"></i>
                         </div>
                         <span class="card-detail">
-                            67 users search this
+                            67 users searched this
                         </span>
                     </div>
                     
@@ -482,7 +485,7 @@ th{
                             <i class="fas fa-laptop icon2"></i>
                         </div>
                         <span class="card-detail">
-                            42 users search this
+                            42 users searched this
                         </span>
                     </div>
                     
@@ -498,7 +501,7 @@ th{
                             <i class="fas fa-pills icon3"></i>
                         </div>
                         <span class="card-detail">
-                            31 users search this
+                            31 users searched this
                         </span>
                     </div>
                           
@@ -521,54 +524,31 @@ th{
             </div>
 
             <div class="tabular--wrapper">
-                <h3 class="main--title">
-                    SAVED INTERESTS
-                </h3>
+                <h3 class="main--title">SAVED ARTICLES</h3>
                 <div class="table--container">
                     <table>
                         <thead>
                             <tr>
-                                <th>Date Saved</th>
-                                <th>Trend Type</th>
-                                <th>Title</th>
-                                <th>URL</th>
-                                <th>Category</th>
+                                <th class="title">Title</th>
+                                <th class="url">URL</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% for article in saved_articles %}
                             <tr>
-                                <td>03-12-2024</td>
-                                <td>Finance</td>
-                                <td>PLACEHOLDER</td>
-                                <td>www....</td>
-                                <td>...</td>
-                                <td><button>REMOVE</button></td>
-                            </tr>   
-                            <tr >
-                                <td>03-18-2024</td>
-                                <td>Computer Science</td>
-                                <td>PLACEHOLDER</td>
-                                <td>www...</td>
-                                <td>...</td>
-                                <td><button>REMOVE</button></td>
-                            </tr> 
-                            <tr >
-                                <td>03-24-2024</td>
-                                <td>Medicine</td>
-                                <td>PLACEHOLDER</td>
-                                <td>www...</td>
-                                <td>...</td>
-                                <td><button>REMOVE</button></td>
-                            </tr>     
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="7">Total: $1,000</td>
+                                <td class="title">{{ article['title'] }}</td>
+                                <td class="url"><a href="{{ article['link'] }}">{{ article['link'] }}</a></td>
+                                <td>
+                                    <form action="/remove_article" method="POST">
+                                        <input type="hidden" name="id" value="{{ article['postid'] }}">
+                                        <button type="submit">REMOVE</button>
+                                    </form>
+                                </td>
                             </tr>
-                        </tfoot>
+                            {% endfor %}
+                        </tbody>
                     </table>
-
                 </div>
             </div>
 

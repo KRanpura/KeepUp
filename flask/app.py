@@ -4,16 +4,95 @@ from flask import jsonify
 import os
 import json
 import sqlite3
+import textwrap
 from os import urandom
 from bs4 import BeautifulSoup
 import requests
+
+
+
+import pathlib
+import textwrap
+import google.generativeai as genai
+
+from IPython.display import display
+from IPython.display import Markdown
 
 app = Flask(__name__, template_folder="templates")
 app.secret_key= urandom(24)
 
 DATABASE = 'keepup.db'
 app.config['DATABASE'] = DATABASE
+# GOOGLE_API_KEY = 'AIzaSyA0IKZ1iiX1BVJwmbnfXIXkz4hPFAMdLnA'
 
+genai.configure(api_key='AIzaSyA0IKZ1iiX1BVJwmbnfXIXkz4hPFAMdLnA')
+
+# Initialize the chat model
+model = genai.GenerativeModel('gemini-pro')
+
+@app.route("/chat", methods=['GET', 'POST'])
+def talktoAI():
+    # Check if the chat history exists in the session
+    if 'chat_history' not in session:
+        # If not, initialize the chat with an empty history
+        session['chat_history'] = []
+
+    # Get the chat history from the session
+    chat_history = session['chat_history']
+
+    # Initialize response to None
+    response = None
+
+    if request.method == 'POST':
+        # Retrieve the message from the user
+        user_message = request.form.get('message')
+
+        # Add the user message to the chat history
+        chat_history.append({'role': 'user', 'parts': [user_message]})
+
+        # Generate the AI response based on the chat history
+        response = model.generate_content(chat_history)
+
+        # Add the AI response to the chat history
+        chat_history.append({'role': 'model', 'parts': [response.text]})
+
+        # Store the updated chat history in the session
+        session['chat_history'] = chat_history
+
+    # Format the response as Markdown
+    markdown_response = None
+    if response:
+        markdown_response = to_markdown(response.text)
+
+    return render_template("chat.html", response=markdown_response)
+
+def to_markdown(text):
+    text = text.replace('•', '  *')
+    return Markdown(textwrap.indent(text, '> ', predicate=lambda _: True))
+
+                 
+# Function to generate AI response based on chat history
+def generate_response(chat_history):
+    response = model.generate_content(chat_history)
+    return response.text
+
+@app.route("/send-message", methods=['POST'])
+def send_message():
+    data = request.get_json()
+    user_message = data.get('message')
+
+    # Get the chat history from the request data (if available)
+    chat_history = data.get('chat_history', [])
+
+    # Add the user message to the chat history
+    chat_history.append({'role': 'user', 'parts': [user_message]})
+
+    # Generate a response based on the user message and chat history
+    bot_response = generate_response(chat_history)
+
+    # Return the response as JSON
+    return jsonify({'message': bot_response, 'chat_history': chat_history})
+ 
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
@@ -171,30 +250,47 @@ def save_post():
         db.rollback()
         return render_template("error.html")
     
+@app.route('/remove_article', methods=['POST'])
+def remove_article():
+    postid = request.form.get('id')
+    user_id = session.get("user_id")  # Corrected access to session key
+    # print("Post ID:", postid)  # Debugging
+    # print("User ID:", user_id)  # Debugging
+    try:
+        if user_id is None:
+            return jsonify({'success': False, 'error': 'User not logged in'})
+        db = get_db()
+        cursor = db.cursor()
 
-# @app.route('/chat', methods=['POST'])
-# def chat():
-#     data = request.json
-#     user_message = data['message']
-
-#     response = openai.Completion.create(
-#         engine='gpt-3.5-turbo-instruct',
-#         prompt=user_message,
-#         max_tokens=50,
-#         n=1,
-#         stop=None,
-#         temperature=0.7
-#     )
-#     assistant_reply = response.choices[0].text.strip()
-#     return jsonify({'message': assistant_reply})
-
+        cursor.execute(
+            "DELETE FROM saved WHERE postid = ? AND userid = ?", (postid, user_id)
+        )
+        db.commit()
+        return redirect(url_for('profile'))
+    except Exception as e:
+        print("Error:", e)
+        db.rollback()
+        return render_template("error.html")
+    
 @app.route("/profile")
 def profile():
-    return render_template("profile.html")
+    try:
+        db = get_db()
+        cursor = db.cursor()
 
-@app.route("/forme")
-def forme():
-    return render_template("forme.html")
+        # Fetch only the title and link columns from the articles table
+        cursor.execute("""
+            SELECT articles.title, articles.link 
+            FROM saved 
+            JOIN articles ON saved.postid = articles.id 
+            WHERE saved.userid = ?
+        """, (session.get("user_id"),))
+        saved_articles = cursor.fetchall()
+
+        return render_template("profile.html", saved_articles=saved_articles)
+    except Exception as e:
+        print("Error:", e)
+        return render_template("error.html")
 
 @app.route("/explore")
 def explore():

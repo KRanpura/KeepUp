@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            /* font-family: Arial, sans-serif; */
+            display: flex; /* Add flex display to body */
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 110px;
+            height: 100vh;
+            padding: 0 1.7rem;
+            color: #fff;
+            overflow: hidden;
+            transition: all .5s linear;
+            background: #7dcc88;
+        }
+
+        .sidebar:hover {
+            width: 300px;
+            transition: .5s;
+        }
+
+        .logo {
+            height: 80px;
+            padding: 16px;
+        }
+
+        .menu {
+            height: 88%;
+            position: relative;
+            list-style: none;
+            padding: 0;
+        }
+
+        .menu li {
+            padding: 1rem;
+            margin: 8px 0;
+            border-radius: 8px;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .menu li:hover,
+        .active {
+            background: #e0e0e058;
+        }
+
+        .menu a {
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .header--title {
+        color: #7dcc88;   
+        }
+        
+        .menu a span {
+            overflow: hidden;
+        }
+
+        .menu a i {
+            font-size: 1.2rem;
+        }
+
+        .logout {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .messages {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            clear: both;
+        }
+
+        .user-message {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 10px;
+            word-wrap: break-word;
+            float: right; /* Align user messages to the right */
+        }
+
+        .bot-message {
+            background-color: #7dcc88;
+            color: #fff;
+            border-radius: 10px;
+            padding: 10px;
+            word-wrap: break-word;
+            float: left; /* Align bot messages to the left */
+        }
+
+        .message-input {
+            width: calc(100% - 80px); /* Adjust width to leave space for button */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .send-button {
+            width: 80px; /* Fixed width for button */
+            padding: 10px 20px;
+            background-color: #7dcc88;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px; /* Add margin between input and button */
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar"> 
+        <div class="logo"></div>
+        <ul class="menu">
+            <li>
+                <a href="/profile">
+                    <i class="fas fa-user"></i>
+                    <span>PROFILE</span>
+                </a>
+            </li>
+            <li>
+                <a href="/explore">
+                    <i class="fas fa-globe"></i>
+                    <span>EXPLORE</span>
+                </a>
+            </li>
+            <li>
+                <a href="/chat">
+                    <i class="fas fa-bookmark"></i>
+                    <span>CHAT</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fas fa-cog"></i>
+                    <span>SETTINGS</span>
+                </a>
+            </li>
+            <li class="logout">
+                <a href="/logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>LOGOUT</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header--title">
+            <h1>Ask KatBot questions about topics that interest you, to summarize something, etc!</h1>
+        </div>
+
+        <div class="messages" id="messages">
+            <!-- Messages will be displayed here -->
+        </div>
+
+        <form id="message-form" class="message-form">
+            <input type="text" id="user-input" class="message-input" placeholder="Type your message...">
+            <button type="submit" class="send-button">Send</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.getElementById('message-form');
+            const userInput = document.getElementById('user-input');
+            const messagesDiv = document.getElementById('messages');
+    
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent form submission
+    
+                const userMessage = userInput.value.trim();
+                if (userMessage === '') return; // Don't send empty messages
+    
+                // Display user message
+                displayMessage(userMessage, 'user-message');
+    
+                // Send user message to the server for processing
+                fetch('/send-message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: userMessage })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Display bot response
+                    displayMessage(data.message, 'bot-message');
+    
+                    // Update chat history with the latest message
+                    messagesDiv.dataset.chatHistory = JSON.stringify(data.chat_history);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+    
+                // Clear input field
+                userInput.value = '';
+            });
+    
+            function displayMessage(message, className) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', className);
+                messageDiv.textContent = message;
+                messagesDiv.appendChild(messageDiv);
+    
+                // Scroll to bottom
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }
+    
+            // Retrieve chat history from the page's dataset
+            const initialChatHistory = JSON.parse(messagesDiv.dataset.chatHistory || '[]');
+    
+            // Display chat history on page load
+            initialChatHistory.forEach(({ role, parts }) => {
+                displayMessage(parts.join(' '), role === 'user' ? 'user-message' : 'bot-message');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -25,5 +25,5 @@ CREATE TABLE saved (
     link VARCHAR(255),
     FOREIGN KEY (postid) REFERENCES articles(id),
     FOREIGN KEY (userid) REFERENCES users(id)
-    CONSTRAINT unique_saved_entry UNIQUE (postid, userid)
+    -- CONSTRAINT unique_saved_entry UNIQUE (postid, userid)
 );
