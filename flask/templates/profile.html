@@ -221,6 +221,61 @@ body{
     font-family: "Courier New", Courier, monospace;
 }
 
+.tabular--wrapper{
+    background: #fff;
+    margin-top: 1rem;
+    border-radius: 10px;
+    padding: 2rem;
+}
+
+.table--container{
+    width: 100%;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead{
+    background: #7dcc88;
+    color: #fff; 
+}
+th{
+    padding: 15px;
+    text-align: left;
+}
+
+tbody{
+    background: #d0f0c044;
+}
+
+td{
+    padding: 15px;
+    font-size: 14px;
+    color: #333;
+}
+
+td:nth-child(even){
+    background: #fff;
+}
+
+tfoot{
+    background-color: rbga(113, 99, 186, 255);
+    font-weight: bold;
+    color: #fff;
+}
+
+tfoot td{
+    padding: 15px;
+    color: #fff;
+}
+
+.table--container button{
+    color: green;
+    background: none;
+    cursor: pointer;
+
+}
     
     </style>
     </head>
@@ -341,7 +396,63 @@ body{
                             ******* ****3434
                         </span>
                     </div>
-                     
+                          
+                    <div class="payment--card">
+                        <div class="card--header">
+                            <div class="amount">
+                                <span class="title">
+                                    pyment amount</span>
+                                    <span 
+                                    class="amount--value">
+                                        $500.00
+                                    </span>
+                                </span>
+                            </div>
+                            <i class="fas fa-dollar-sign icon"></i>
+                        </div>
+                        <span class="card-detail">
+                            ******* ****3434
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tabular--wrapper">
+                <h3 class="main--title">
+                    Finiance
+                </h3>
+                <div class="table--container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Transaction Type</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>03-24-2024</td>
+                                <td>Expenses</td>
+                                <td>Office</td>
+                                <td>Supplies</td>
+                                <td>$250</td>
+                                <td>Office Expenses</td>
+                                <td>Pending</td>
+                                <td><button>Edit</button></td>
+                            </tr>   
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="7">Total: $1,000</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
                 </div>
             </div>
         </div>
