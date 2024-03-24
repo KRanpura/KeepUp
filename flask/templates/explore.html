@@ -1,298 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset = "UTF-8" />
-        <title>DASHBOARD DESIGN</title>
-        <!-- <link rel = "stylesheet" href="styleProfile.css" /> -->
-        <link
-            rel="stylesheet"
-            href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        />
-        <style>
-            *{
-    margin: 0;
-    padding: 0;
-    border: none;
-    outline: none;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-}
+<head>
+    <meta charset="UTF-8">
+    <title>DASHBOARD DESIGN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS styles */
+        * {
+            margin: 0;
+            padding: 0;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
 
-body{
-    display: flex;
-}
-.sidebar{
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 110px;
-    height: 100vh;
-    padding: 0 1.7rem;
-    color: #fff;
-    overflow: hidden;
-    transition: all .5s linear;
-    background: #7dcc88;
-}
+        body {
+            display: flex;
+        }
 
-.sidebar:hover{
-    width: 300px;
-    transition: .5s;
+        .sidebar {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 110px;
+            height: 100vh;
+            padding: 0 1.7rem;
+            color: #fff;
+            overflow: hidden;
+            transition: all .5s linear;
+            background: #7dcc88;
+        }
 
-}
-.logo{
-    height: 80px;
-    padding: 16px;
-}
-.menu{
-    height: 88%;
-    position: relative;
-    list-style: none;
-    padding: 0;
-}
+        .sidebar:hover {
+            width: 300px;
+            transition: .5s;
+        }
 
-.menu li{
-    padding: 1rem;
-    margin: 8px 0;
-    border-radius: 8px;
-    transition: all 0.5s ease-in-out;
-}
+        .logo {
+            height: 80px;
+            padding: 16px;
+        }
 
-.menu li:hover,
-.active {
-    background: #e0e0e058;
-}
+        .menu {
+            height: 88%;
+            position: relative;
+            list-style: none;
+            padding: 0;
+        }
 
-.menu a{
-    color: #fff;
-    font-size: 14px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
+        .menu li {
+            padding: 1rem;
+            margin: 8px 0;
+            border-radius: 8px;
+            transition: all 0.5s ease-in-out;
+        }
 
-.menu a span{
-    overflow: hidden;
-}
+        .menu li:hover,
+        .active {
+            background: #e0e0e058;
+        }
 
-.menu a i{
-    font-size: 1.2rem;
-}
+        .menu a {
+            color: #fff;
+            font-size: 14px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
 
-.logout {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    
-}
+        .menu a span {
+            overflow: hidden;
+        }
 
-.main--content{
-    position: relative;
-    background-color: #d0f0c044;
-    width: 100%;
-    padding: 1rem;
-}
+        .menu a i {
+            font-size: 1.2rem;
+        }
 
-.header--wrapper img{
-     width: 50px;
-     height: 50px;
-     cursor: pointer;
-     border-radius: 50%;
-}
-.header--wrapper{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    background: #fff;
-    border-radius: 10px;
-    padding: 10px 2rem;
-    margin-bottom: 1rem;
-}
+        .logout {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
 
-.header--title {
-    color: #7dcc88;   
-}
+        .main--content {
+            position: relative;
+            background-color: #d0f0c044;
+            width: 100%;
+            padding: 1rem;
+        }
 
-.user--info{
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
+        .header--wrapper img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            border-radius: 50%;
+        }
 
-.search--box{
-    background: rgb(237, 237, 237);
-    border-radius: 15px;
-    color: rbga(113, 99, 186, 255);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 4px 12px;
-}
+        .header--wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: #fff;
+            border-radius: 10px;
+            padding: 10px 2rem;
+            margin-bottom: 1rem;
+        }
 
-.search--box input{
-    background-color: transparent;
-    padding: 5px;
-}
-.search--box i{
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all .5s ease-out;
-}
-.search--box i:hover{
-    transform: scale(1.2);
-}
+        .header--title {
+            color: #7dcc88;
+        }
 
-.art1--container{
-    background: #fff;
-    padding: 1rem;
-    border-radius: 10px;
-}
+        .user--info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
 
-.card--wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
+        .search--box {
+            background: rgb(237, 237, 237);
+            border-radius: 15px;
+            color: rbga(113, 99, 186, 255);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 12px;
+        }
 
-.payment--card{
-    background: rgb(229, 233, 233);
-    border-radius: 10px;
-    padding: 1.2rem;
-    width: 400px;
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: all 0.5s ease-in-out;
-}
+        .search--box input {
+            background-color: transparent;
+            padding: 5px;
+        }
 
-.payment--card:hover{
-    transform: translateY(-7px);
-    transition: .5s;
-}
-.card--header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
+        .search--box i {
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all .5s ease-out;
+        }
 
-.amount{
-    display: flex;
-    flex-direction: column;   
-}
+        .search--box i:hover {
+            transform: scale(1.2);
+        }
 
-.icon{
-    color: #ffff;
-    padding: 1rem;
-    height: 60px;
-    width: 60px;
-    text-align: center;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    background: red;
-}
+        .art1--container {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
 
-.main--title{
-    color: #7dcc88;
-    font-size: 36px;
-    font-weight: bold;
-    align-items: right;
-    justify-content: right;
-    text-align: right;
-}
+        .main--title {
+            color: #7dcc88;
+            font-size: 36px;
+            font-weight: bold;
+            margin-right: 1rem; /* Adjusted margin-right */
+        }
 
-.summary--text{
-    color: #7dcc88;
-    font-size: 18px;
-    text-align: center;
-    margin-left: 30rem;
-    line-height: 18px;
-    width: 80%;
-    top: 40px;
-    
-}
+        .summary--text {
+            color: #7dcc88;
+            font-size: 24px;
+            width: 70%; /* Adjusted width */
+        }
 
+        .card--wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .payment--card {
+            background: rgb(229, 233, 233);
+            border-radius: 10px;
+            width: 400px;
+            height: 400px; /* Or adjust this to the desired height */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.5s ease-in-out;
+            position: relative;
+        }
+
+        .payment--image {
+            width: 100%;
+            height: 100% !important; /* Ensure the image fills the entire height of its parent container */
+            object-fit: cover; /* Ensure the image covers the entire space without distortion */
+            border-radius: 10px; 
+        }
+
+        .payment--card:hover {
+            transform: translateY(-7px);
+            transition: .5s;
+        }
+
+        .card--header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .explore-option {
+            display: table-cell;
+            padding: 0 10px;
+        }
+        .option-table {
+            color: #7dcc88;
+            font-size: 18px;
+            width: 50%;
+            display: table;
+        }
+        .save-button {
+            display: block;
+            margin: 10px auto; /* Center the button horizontally */
+            padding: 8px 20px; /* Adjust padding as needed */
+            font-size: 20px; /* Increase font size */
+            background-color: #7dcc88; /* Button background color */
+            color: #fff; /* Text color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .save-button:hover {
+            background-color: #5fa56b; /* Change background color on hover */
+        }
     </style>
-    </head>
-    <body>
-        <div class="sidebar"> 
-            <div class= "logo"></div>
-            <ul class = "menu">
-                <!-- <li class = "active">
-                    <a href=" " >
-                       <i class = "fas fab fas fa-head-side-cough"></i>
-                       <span>DASHBOARD</span>
-                    </a>
-                </li> -->
-                <li>
-                    <a href="/profile">
-                       <i class = "fas fa-user"></i>
-                       <span>PROFILE</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/explore">
-                       <i class = "fas fa-globe"></i>
-                       <span>EXPLORE</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="/forme">
-                       <i class = "fas fa-bookmark"></i>
-                       <span>FOR ME</span>
-                    </a>
-                </li>
-                <li>
-                    <a href=" #">
-                       <i class = "fas fa-cog"></i>
-                       <span>SETTINGS</span>
-                    </a>
-                </li>
-                <li class = "logout">
-                    <a href="/logout">
-                       <i class = "fas fa-sign-out-alt"></i>
-                       <span>LOGOUT</span>
-                    </a>
-                </li>
-                </ul>
-            </div>
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="logo"></div>
+    <ul class="menu">
+        <li>
+            <a href="/profile">
+                <i class="fas fa-user"></i>
+                <span>PROFILE</span>
+            </a>
+        </li>
+        <li>
+            <a href="/explore">
+                <i class="fas fa-globe"></i>
+                <span>EXPLORE</span>
+            </a>
+        </li>
+        <li>
+            <a href="/forme">
+                <i class="fas fa-bookmark"></i>
+                <span>FOR ME</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fas fa-cog"></i>
+                <span>SETTINGS</span>
+            </a>
+        </li>
+        <li class="logout">
+            <a href="/logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>LOGOUT</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!-- Main content -->
+<div class="main--content">
+    <div class="header--wrapper">
+        <div class="header--title">
+            <h2>EXPLORE</h2>
         </div>
-
-        <div class= "main--content">
-            <div class = "header--wrapper">
-                <div class = "header--title">
-                    <!-- <span>Primary</span> -->
-                    <h2>EXPLORE</h2>
-                </div>
-                <div class = "user--info">
-                    <div class = "search--box">
-                        <i class="fas fa-search"></i>
-                        <input type = "text" 
-                        placeholder = "Search"/>
-                    </div>
-                    <img src = "/static/resources/ui-profile-icon-vector.jpg" 
-                    alt="" />
-                </div>
+        <div class="option-table">
+            <div class="explore-option" id="recent-research">
+                <h3>Trending</h3>
             </div>
+            
+            <div class="explore-option" id="research-papers">
+                <h3>Research Papers</h3>
+            </div>
+            
+            <div class="explore-option" id="articles">
+                <h3>Articles</h3>
+            </div>
+            
+        </div>
+        <div class="user--info">
+            <div class="search--box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search"/>
+            </div>
+            <img src="/static/resources/ui-profile-icon-vector.jpg" alt=""/>
+        </div>
+    </div>
 
-            <div class="art1--container">
-                <div class="main--title">
-                    Your Daily Market Recap
-                </div>
-                <div class="summary--text">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <div class="post">
+        <form action="/savepost" method="post">
+            {% for article in articles %}
+            <div class="art1--container" data-tags="trending">
+                <div>
+                    <h3 class="main--title">{{ article['title'] }}</h3>
+                    <p class="summary--text">{{ article['summary'] }}</p>
+                    <button type="submit" class="save-button">Save</button>
                 </div>
                 <div class="card--wrapper">
                     <div class="payment--card">
-                        <div class="card--header">
-                        </div>
-                    </div>                     
+                        <a class="payment--image" href="{{ article['link'] }}" target="_blank">
+                            <img class="payment--image" src="/static/resources/article_pics/{{ article['img'] }}" alt="Image description">
+                        </a>
+                        <div class="block-content"></div>
+                    </div>
                 </div>
+                <!-- Add a hidden input field to store the article ID -->
+                <input type="hidden" name="article_id" value="{{ article['id'] }}">
+                <input type="hidden" name="link" value="{{article['link']}}">
             </div>
-        </div>
-    </body>
-</html>
+            {% endfor %}
+        </form>
+    </div>
+</div>

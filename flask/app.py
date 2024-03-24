@@ -30,6 +30,46 @@ def init_db():
         with app.open_resource('schema.sql') as f:
             db.executescript(f.read().decode('utf-8'))
 
+def initialize_urls():
+    # Initialize a list of tuples, each containing a URL and a manually selected title
+    urls = [
+        ("https://365datascience.com/career-advice/data-scientist-job-market/",
+             "Data Science Jobs in 2024", "data_science_stuff.png", 
+             "Our comprehensive 2023 tech layoffs study revealed that data scientists constituted merely..."),
+        ("https://www.tomshardware.com/pc-components/gpus/nvidia-rtx-40-series-allegedly-getting-down-binned-gpu-updates-certain-4060-and-4070-class-cards-to-use-larger-harvested-chips", 
+              "Nvidia's Newest GPU", "nvidia_gpu.png",
+              "It's that time of the year again when Nvidia releases existing products with recycled or lower-binned silicon. According to hardware leaker MEGAsizeGPU..."),
+        ("https://news.medtronic.com/five-healthcare-technology-trends-in-2024-newsroom", "Healthcare Technology Trends in 2024", "medtronic.png", 
+            "AI can help address chronic staffing problems at hospitals. Likewise, it will continue to aid in the diagnosis of more diseases..."),
+        ("https://www.hrw.org/report/2023/12/21/metas-broken-promises/systemic-censorship-palestine-content-instagram-and", "Systemic Censorship in Palestine",
+         "meta.png", "Meta’s inconsistent enforcement of its own policies led to the erroneous removal of content about Palestine... "),
+        # ("https://www.thezebra.com/resources/driving/future-car-design/", "Future Car Design")
+        # Add more URLs and titles as needed
+    ]
+    return urls
+
+def store_articles():
+    urls_with_titles = initialize_urls()
+    
+    # Store summaries and entire articles in the database
+    try:
+        db = get_db()
+        cursor = db.cursor()
+
+        # Insert articles into the articles table
+        for url, title, img, summary in urls_with_titles:
+            cursor.execute(
+                "INSERT INTO articles (title, summary, link, img) VALUES (?, ?, ?, ?)",
+                (title, summary, url, img),
+            )
+        
+        db.commit()
+        return True
+    except Exception as e:
+        print("Error:", e)
+        db.rollback()
+        return False
+    
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -63,7 +103,6 @@ def login():
             return redirect(url_for("profile"))
         else:
             return render_template("error.html")
-
     return render_template("login.html")
 
 @app.route("/signup", methods = ["GET", "POST"])
@@ -106,22 +145,48 @@ def signup():
         user = cursor.fetchone()
         session["user_id"] = user["id"]
 
-        return render_template("submit_interests.html")
+        return render_template("profile.html")
 
     return render_template("signup.html")
 
-@app.route("/submit_interests", methods=["POST"])
-def submit_interests():
-    if request.method == "POST":
-        selected_interests = request.form.getlist("interests")
-        user_id = session.get("user_id")
+@app.route('/savepost', methods=['POST'])
+def save_post():
+    postid = request.form.get('article_id')
+    user_id = session.get("user_id")  # Corrected access to session key
+    link = request.form.get('link')
+    try:
+        if user_id is None:
+            return jsonify({'success': False, 'error': 'User not logged in'})
+
         db = get_db()
         cursor = db.cursor()
-        for interest in selected_interests:
-            cursor.execute("INSERT INTO interests (userid, interest) VALUES (?, ?)", (user_id, interest))
-        db.commit()
-        return redirect(url_for("profile"))
 
+        cursor.execute(
+            "INSERT INTO saved (postid, userid, link) VALUES (?, ?, ?)", (postid, user_id, link),
+        )
+        db.commit()
+        return redirect(url_for('explore'))
+    except Exception as e:
+        print("Error:", e)
+        db.rollback()
+        return render_template("error.html")
+    
+
+# @app.route('/chat', methods=['POST'])
+# def chat():
+#     data = request.json
+#     user_message = data['message']
+
+#     response = openai.Completion.create(
+#         engine='gpt-3.5-turbo-instruct',
+#         prompt=user_message,
+#         max_tokens=50,
+#         n=1,
+#         stop=None,
+#         temperature=0.7
+#     )
+#     assistant_reply = response.choices[0].text.strip()
+#     return jsonify({'message': assistant_reply})
 
 @app.route("/profile")
 def profile():
@@ -131,18 +196,43 @@ def profile():
 def forme():
     return render_template("forme.html")
 
-@app.route("/chooseinterests")
-def chooseinterests():
-    return render_template("chooseinterests.html")
-
-
 @app.route("/explore")
 def explore():
-    return render_template("explore.html")
+    store_articles()
+    try:
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM articles")
+        articles = cursor.fetchall()
+        return render_template("explore.html", articles=articles)
+    except Exception as e:
+        print("Error:", e)
+        return render_template("error.html")
 
 @app.route("/logout")
 def logout():
     return render_template("home.html")
+
+# def scrape_article_content(url):
+#     try:
+#         response = requests.get(url)
+#         if response.status_code == 200:
+#             soup = BeautifulSoup(response.content, 'html.parser')
+#             # Find all text content within the <body> tag
+#             body_text = soup.find('body').get_text()
+#            # print("Web Scraped Content:", body_text.strip())  # Print the scraped content
+#             return body_text.strip()
+#         else:
+#             return None
+#     except Exception as e:
+#         print("Error:", e)
+#         return None
+
+init_db()
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
 
 # url = str("https://www.learndatasci.com/tutorials/ultimate-guide-web-scraping-w-python-requests-and-beautifulsoup/")
 # htmlPage = requests.get(url)
@@ -151,8 +241,16 @@ def logout():
 # for link in htmlGuts.find_all('a'):
 #     print(link.get('href'))
 
-init_db()
-
-if __name__ == "__main__":
-    app.run(debug=True)
-
+# def send_to_chat_for_summary(content):
+#     try:
+#         response = requests.post(
+#             'http://localhost:5000/chat',  # Replace with your actual server URL
+#             json={'message': '', 'scraped_content': content}
+#         )
+#         if response.status_code == 200:
+#             return response.json()
+#         else:
+#             return None
+#     except Exception as e:
+#         print("Error:", e)
+#         return None

@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS interests;
+DROP TABLE IF EXISTS articles;
+DROP TABLE IF EXISTS saved;
 
 CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -9,21 +10,20 @@ CREATE TABLE users (
     pass TEXT NOT NULL
 );
 
-CREATE TABLE interests (
-    userid INTEGER,
-    interest VARCHAR(30),
-    PRIMARY KEY (userid, interest),
-    FOREIGN KEY (userid) REFERENCES users(id)
+CREATE TABLE articles (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title VARCHAR(50),
+    summary VARCHAR(500),
+    link VARCHAR(255),
+    img VARCHAR(15)
 );
 
--- CREATE TABLE posts (
---     id INTEGER PRIMARY KEY AUTOINCREMENT, 
---     content varchar(100)
--- )
-
--- CREATE TABLE posts (
---     id INTEGER PRIMARY KEY AUTOINCREMENT, 
---     userid INTEGER FOREIGN KEY REFERENCES users, 
---     content varchar(150)
--- )
--- finish later
+CREATE TABLE saved (
+    id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    postid INTEGER,
+    userid INTEGER,
+    link VARCHAR(255),
+    FOREIGN KEY (postid) REFERENCES articles(id),
+    FOREIGN KEY (userid) REFERENCES users(id)
+    CONSTRAINT unique_saved_entry UNIQUE (postid, userid)
+);
